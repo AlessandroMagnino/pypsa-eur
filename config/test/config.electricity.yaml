@@ -77,8 +77,8 @@ lines:
 
 solving:
   solver:
-    name: highs
-    options: highs-simplex
+    name: gurobi
+    options: gurobi-default
 
   check_objective:
     enable: false
