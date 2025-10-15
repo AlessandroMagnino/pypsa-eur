@@ -1,0 +1,110 @@
+# Run on entire Europe with European electricity prices and CO2 price of 50 €/tCO2
+
+tutorial: false
+
+
+run:
+  name: "eu-elec"           # use this to keep track of runs with different settings
+  disable_progressbar: false
+  shared_resources:
+    policy: true            # Useful if running multiple countries to avoid redownloading policy data
+  shared_cutouts: true      # Reuse meteorological cutouts if already present (avoids regeneration)
+  scenarios:
+   enable: false            # Enable to run multiple scenarios
+   file: config/scenarios/eu-elec-scenarios.yaml  # File containing scenario definitions
+
+scenario:
+  clusters:
+  - 50                      # Number of clusters to reduce the network to (50 is a good compromise)
+  opts:
+  - ''                      # Additional options for clustering (e.g. to change the clustering method)
+  sector_opts:
+  - ''                      # Additional options for sector coupling (e.g. to add heating or transport)
+  planning_horizons:
+  - 2050                    # Planning horizon years to run (e.g. 2030, 2040, 2050)
+
+countries:
+- AL
+- AT
+- BA
+- BE
+- BG
+- CH
+- CZ
+- DE
+- DK
+- EE
+- ES
+- FI
+- FR
+- GB
+- GR
+- HR
+- HU
+- IE
+- IT
+- LT
+- LU
+- LV
+- ME
+- MK
+- NL
+- 'NO'
+- PL
+- PT
+- RO
+- RS
+- SE
+- SI
+- SK
+- XK
+
+snapshots:
+  start: '2013-01-01'
+  end: '2014-01-01'
+  inclusive: 'left'         # 'left' means the last timestamp is not included, 'right' means it is included
+
+electricity:
+  co2limit_enable: false
+  co2limit: 7.75e+7
+
+  extendable_carriers:
+    Generator: [solar, solar-hsat, onwind, offwind-ac, offwind-dc, offwind-float, OCGT, CCGT, nuclear]
+    StorageUnit: [battery]
+    Store: [H2]
+    Link: []
+
+  renewable_carriers: [solar, solar-hsat, onwind, offwind-ac, offwind-dc, offwind-float]
+  estimate_renewable_capacities:
+    enable: true
+    from_gem: true
+    year: 2020
+    expansion_limit: false
+    technology_mapping:
+      Offshore: offwind-ac
+      Onshore: onwind
+      PV: solar
+
+atlite:
+  default_cutout: europe-2013-sarah3-era5
+
+renewable:
+  offwind-ac:
+    max_depth: false
+  offwind-dc:
+    max_depth: false
+  offwind-float:
+    min_depth: false
+    max_depth: false
+
+clustering:
+  temporal:
+    resolution_elec: false
+
+solving:
+  solver:
+    name: gurobi
+    options: gurobi-default
+
+  check_objective:
+    enable: false

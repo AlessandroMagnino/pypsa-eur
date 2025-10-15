@@ -6,7 +6,7 @@ tutorial: true
 
 
 run:
-  name: "test-elec-PT" # use this to keep track of runs with different settings
+  name: "test-elec" # use this to keep track of runs with different settings
   disable_progressbar: true
   shared_resources:
     policy: false
@@ -18,7 +18,7 @@ scenario:
   opts:
   - ''
 
-countries: ['PT']
+countries: ['BE']
 
 snapshots:
   start: "2013-03-01"
@@ -46,12 +46,12 @@ electricity:
       PV: solar
 
 atlite:
-  default_cutout: pt-03-2013-era5
+  default_cutout: be-03-2013-era5
   cutouts:
-    pt-03-2013-era5:
+    be-03-2013-era5:
       module: era5
-      x: [-10.5, -5.0]
-      y: [36.0, 43.0]
+      x: [4., 15.]
+      y: [46., 56.]
       time: ["2013-03-01", "2013-03-08"]
 
 renewable:
